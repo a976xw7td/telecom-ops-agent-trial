@@ -1,0 +1,478 @@
+{
+  "title": "经营决策应用 · 可复现测试运行日志",
+  "appVersion": "JDA-7966c0-faf6c5a10c78",
+  "engineVersion": "1.0.0",
+  "agentVersion": "1.0.0",
+  "skillVersion": "1.0.0",
+  "kbVersion": "1.0.0",
+  "report": "OPS-WK-2026W43",
+  "period": "2026-10-19 ~ 2026-10-25",
+  "runAt": "2026-10-28T04:38:39.453Z",
+  "env": {
+    "node": "v24.17.0",
+    "platform": "darwin",
+    "offline": true,
+    "network": "无任何网络请求"
+  },
+  "manifest": [
+    {
+      "file": "assets/data.js",
+      "bytes": 5550,
+      "sha256": "7966c0f076be02a7"
+    },
+    {
+      "file": "assets/kb.js",
+      "bytes": 7181,
+      "sha256": "f7abcd1637ec9e34"
+    },
+    {
+      "file": "assets/skill.js",
+      "bytes": 7385,
+      "sha256": "49944f4162e71d9a"
+    },
+    {
+      "file": "assets/engine.js",
+      "bytes": 14929,
+      "sha256": "0a443a657bcac228"
+    },
+    {
+      "file": "assets/agent.js",
+      "bytes": 14181,
+      "sha256": "6f6477a9c6bb404e"
+    },
+    {
+      "file": "assets/ui.js",
+      "bytes": 17043,
+      "sha256": "bb0f070d9dbf3e09"
+    },
+    {
+      "file": "index.html",
+      "bytes": 8323,
+      "sha256": "5530027fc4cad8f0"
+    }
+  ],
+  "summary": [
+    {
+      "group": "T1",
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "group": "T2",
+      "total": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "group": "T3",
+      "total": 16,
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "group": "T4",
+      "total": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "group": "T5",
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    }
+  ],
+  "total": 43,
+  "passed": 43,
+  "failed": 0,
+  "results": [
+    {
+      "group": "T1",
+      "id": "T1-CD-count",
+      "name": "城东区 指标条数",
+      "expected": "7",
+      "actual": "7",
+      "pass": true,
+      "note": "METRICS 共 7 个字段"
+    },
+    {
+      "group": "T1",
+      "id": "T1-CD-recalc",
+      "name": "城东区：7 指标 当前值/环比/阈值 独立复算一致",
+      "expected": "true",
+      "actual": "全部一致（误差 < 1e-9）",
+      "pass": true,
+      "note": "复算基准：series 末值、末值-次末值、METRICS.target"
+    },
+    {
+      "group": "T1",
+      "id": "T1-CX-count",
+      "name": "城西区 指标条数",
+      "expected": "7",
+      "actual": "7",
+      "pass": true,
+      "note": "METRICS 共 7 个字段"
+    },
+    {
+      "group": "T1",
+      "id": "T1-CX-recalc",
+      "name": "城西区：7 指标 当前值/环比/阈值 独立复算一致",
+      "expected": "true",
+      "actual": "全部一致（误差 < 1e-9）",
+      "pass": true,
+      "note": "复算基准：series 末值、末值-次末值、METRICS.target"
+    },
+    {
+      "group": "T1",
+      "id": "T1-XG-count",
+      "name": "新港区 指标条数",
+      "expected": "7",
+      "actual": "7",
+      "pass": true,
+      "note": "METRICS 共 7 个字段"
+    },
+    {
+      "group": "T1",
+      "id": "T1-XG-recalc",
+      "name": "新港区：7 指标 当前值/环比/阈值 独立复算一致",
+      "expected": "true",
+      "actual": "全部一致（误差 < 1e-9）",
+      "pass": true,
+      "note": "复算基准：series 末值、末值-次末值、METRICS.target"
+    },
+    {
+      "group": "T1",
+      "id": "T1-dir-up",
+      "name": "宽带净增 931 < 阈值 1300（dir=up）判定",
+      "expected": "bad",
+      "actual": "bad",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T1",
+      "id": "T1-dir-down",
+      "name": "离网率 2.34 > 阈值 1.2（dir=down）判定",
+      "expected": "bad",
+      "actual": "bad",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T2",
+      "id": "T2-cross-exists",
+      "name": "存在口径交叉核验规则（装机 vs 净增）",
+      "expected": "true",
+      "actual": "C7 积压增量口径核验",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T2",
+      "id": "T2-cross-recalc",
+      "name": "交叉核验逐周数值与测试独立复算完全一致",
+      "expected": "true",
+      "actual": "3 周全部一致",
+      "pass": true,
+      "note": "理论值公式：(installArrive − installStaff×6) × workdays"
+    },
+    {
+      "group": "T2",
+      "id": "T2-cross-fire",
+      "name": "偏差 >15% 周数 → 触发状态",
+      "expected": "true",
+      "actual": "true",
+      "pass": true,
+      "note": "超阈值周：2026-W41(-53.6%)、2026-W42(-44.8%)"
+    },
+    {
+      "group": "T2",
+      "id": "T2-score",
+      "name": "风险分 = 命中规则严重度加权和（独立复算）",
+      "expected": "13",
+      "actual": "13",
+      "pass": true,
+      "note": "命中 C1:high,C2:high,C3:medium,C4:medium,C5:low,C7:medium"
+    },
+    {
+      "group": "T2",
+      "id": "T2-no-false-fire",
+      "name": "每条命中规则都能用原始数值独立复现（无空触发）",
+      "expected": "true",
+      "actual": "全部可复现",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-gate-1",
+      "name": "流程外无关问题 → 闸门状态",
+      "expected": "off_topic",
+      "actual": "off_topic",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-nog-actions-1",
+      "name": "流程外无关问题 不输出行动方案/归因",
+      "expected": "true",
+      "actual": "未输出方案",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-text-1",
+      "name": "流程外无关问题 拒答文案明确说明原因",
+      "expected": "true",
+      "actual": "**这个问题超出本应用可答范围，不作答。**\n\n问题「今天天气怎么样」与…",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-gate-2",
+      "name": "样本外区县 → 闸门状态",
+      "expected": "out_of_scope",
+      "actual": "out_of_scope",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-nog-actions-2",
+      "name": "样本外区县 不输出行动方案/归因",
+      "expected": "true",
+      "actual": "未输出方案",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-text-2",
+      "name": "样本外区县 拒答文案明确说明原因",
+      "expected": "true",
+      "actual": "该区县不在样本范围（样本仅含 城东区、城西区、新港区），无法作答。…",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-gate-3",
+      "name": "样本未提供的指标 → 闸门状态",
+      "expected": "insufficient_evidence",
+      "actual": "insufficient_evidence",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-nog-actions-3",
+      "name": "样本未提供的指标 不输出行动方案/归因",
+      "expected": "true",
+      "actual": "未输出方案",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-text-3",
+      "name": "样本未提供的指标 拒答文案明确说明原因",
+      "expected": "true",
+      "actual": "**证据不足，无法作答。**\n\n问题涉及「5G专网」，本样本未提供该数据…",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-gate-4",
+      "name": "成本收益类问题 → 闸门状态",
+      "expected": "insufficient_evidence",
+      "actual": "insufficient_evidence",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-nog-actions-4",
+      "name": "成本收益类问题 不输出行动方案/归因",
+      "expected": "true",
+      "actual": "未输出方案",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-text-4",
+      "name": "成本收益类问题 拒答文案明确说明原因",
+      "expected": "true",
+      "actual": "**证据不足，无法作答。**\n\n问题涉及「成本与利润」，本样本未提供该数…",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-gap-list",
+      "name": "证据不足时返回补数清单（字段/来源/口径/周期）",
+      "expected": "true",
+      "actual": "5G专网 相关明细指标｜对应业务系统（本样本未接入）",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-in-scope",
+      "name": "范围内问题正常作答",
+      "expected": "ok",
+      "actual": "ok",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-cited",
+      "name": "结论带 RAG 引用（≥1 条）",
+      "expected": "true",
+      "actual": "4 条：D6#2、D6#1、D6#4、D5#2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T3",
+      "id": "T3-cite-resolvable",
+      "name": "每条引用都能回溯到 KB 真实文档块",
+      "expected": "true",
+      "actual": "D6#2、D6#1、D6#4、D5#2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T4",
+      "id": "T4-text",
+      "name": "同一问题连续两次运行，自然语言答案逐字相同",
+      "expected": "**新港区结论**：风险分 13，命中 6 项异常（离网率触碰红线：2.34；积压超清理阈值：612；投诉超周阈值：131；融合渗透率低于目标：38.4；综合ARPU低于目标：65.9；积压增量口径核验：2026-W41：实际 +65 / 理论 +140，偏差 -53.6%；2026-W42：实际 +85 / 理论 +154，偏差 -44.8%；2026-W43：实际 +142 / 理论 +147，偏差 -3.4%）。\n\n**原因假设（按置信度）**：\n- P1 置信度 0.81：装维交付超时是投诉与离网的主因，链条为积压上升→P2超时→安装类投诉→合约窗口离网（依据 D2/D5/D6）\n- P4 置信度 0.77：在岗人数不足导致产能低于到达，积压无法自行下降（依据 D2/D8）\n- P2 置信度 0.63：融合渗透率下滑削弱黏性，单宽带用户在合约到期窗口更易离网（依据 D1/D3）\n- P3 置信度 0.45：渠道订单连续下滑削弱新增与存量触点，加速客户流失（依据 D4）\n\n**反证与排除**：\n- 宽带净增由 880 升至 931（+51 户），需求侧未恶化，不能归因为'市场变差'\n\n**行动方案**：\n- [A1] P1/P2 分级清理：P1 当日、P2 三日内承诺兑现，剩余资源排 P3｜责任：网络运营部｜周期：本周内｜验证：P2 三日达成率 ≥ 95%\n- [A2] 临时外协承接 P3 与部分 P2，自有人员保 P1｜责任：网络运营部｜周期：1~2 周｜验证：积压周下降 ≥ 100 单\n- [A3] 超时工单客户主动告知与预约改期，降低安抚型投诉｜责任：客户服务部｜周期：本周内｜验证：安装类投诉周环比下降\n- [A7] 按边际递减假设补员或外协，第 1 周按 50% 产能计｜责任：网络运营部｜周期：1~2 周｜验证：日产能 ≥ 日均到达，积压转降\n- [A8] 同步上调 P2 承诺口径并向客户显性告知｜责任：客户服务部｜周期：本周内｜验证：承诺兑现率不下降\n- [A4] 装维上门随销融合套餐 A，优先存量单宽用户｜责任：市场经营部｜周期：2~4 周｜验证：融合渗透率周提升 ≥ 0.5pp\n- [A5] 存量单宽用户定向外呼升级（配合随销，不做单点依赖）｜责任：市场经营部｜周期：2 周｜验证：外呼转化率 ≥ 3%\n- [A6] 对连续两月低于基准 70% 的门店做产能辅导与政策复核｜责任：渠道管理部｜周期：2 周｜验证：门店订单回升至基准 85%\n\n**出处**：历史案例：新港区离网率异常升高归因 v1.0 D6#2、历史案例：新港区离网率异常升高归因 v1.0 D6#1、历史案例：新港区离网率异常升高归因 v1.0 D6#4、服务质量与投诉阈值 v1.1 D5#2",
+      "actual": "**新港区结论**：风险分 13，命中 6 项异常（离网率触碰红线：2.34；积压超清理阈值：612；投诉超周阈值：131；融合渗透率低于目标：38.4；综合ARPU低于目标：65.9；积压增量口径核验：2026-W41：实际 +65 / 理论 +140，偏差 -53.6%；2026-W42：实际 +85 / 理论 +154，偏差 -44.8%；2026-W43：实际 +142 / 理论 +147，偏差 -3.4%）。\n\n**原因假设（按置信度）**：\n- P1 置信度 0.81：装维交付超时是投诉与离网的主因，链条为积压上升→P2超时→安装类投诉→合约窗口离网（依据 D2/D5/D6）\n- P4 置信度 0.77：在岗人数不足导致产能低于到达，积压无法自行下降（依据 D2/D8）\n- P2 置信度 0.63：融合渗透率下滑削弱黏性，单宽带用户在合约到期窗口更易离网（依据 D1/D3）\n- P3 置信度 0.45：渠道订单连续下滑削弱新增与存量触点，加速客户流失（依据 D4）\n\n**反证与排除**：\n- 宽带净增由 880 升至 931（+51 户），需求侧未恶化，不能归因为'市场变差'\n\n**行动方案**：\n- [A1] P1/P2 分级清理：P1 当日、P2 三日内承诺兑现，剩余资源排 P3｜责任：网络运营部｜周期：本周内｜验证：P2 三日达成率 ≥ 95%\n- [A2] 临时外协承接 P3 与部分 P2，自有人员保 P1｜责任：网络运营部｜周期：1~2 周｜验证：积压周下降 ≥ 100 单\n- [A3] 超时工单客户主动告知与预约改期，降低安抚型投诉｜责任：客户服务部｜周期：本周内｜验证：安装类投诉周环比下降\n- [A7] 按边际递减假设补员或外协，第 1 周按 50% 产能计｜责任：网络运营部｜周期：1~2 周｜验证：日产能 ≥ 日均到达，积压转降\n- [A8] 同步上调 P2 承诺口径并向客户显性告知｜责任：客户服务部｜周期：本周内｜验证：承诺兑现率不下降\n- [A4] 装维上门随销融合套餐 A，优先存量单宽用户｜责任：市场经营部｜周期：2~4 周｜验证：融合渗透率周提升 ≥ 0.5pp\n- [A5] 存量单宽用户定向外呼升级（配合随销，不做单点依赖）｜责任：市场经营部｜周期：2 周｜验证：外呼转化率 ≥ 3%\n- [A6] 对连续两月低于基准 70% 的门店做产能辅导与政策复核｜责任：渠道管理部｜周期：2 周｜验证：门店订单回升至基准 85%\n\n**出处**：历史案例：新港区离网率异常升高归因 v1.0 D6#2、历史案例：新港区离网率异常升高归因 v1.0 D6#1、历史案例：新港区离网率异常升高归因 v1.0 D6#4、服务质量与投诉阈值 v1.1 D5#2",
+      "pass": true,
+      "note": "长度 1157 字"
+    },
+    {
+      "group": "T4",
+      "id": "T4-json",
+      "name": "结构化输出（去掉时间戳）逐字节相同",
+      "expected": "true",
+      "actual": "JSON 长度 14177",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T4",
+      "id": "T4-version",
+      "name": "版本标识稳定",
+      "expected": "jd-ecffef36",
+      "actual": "jd-ecffef36",
+      "pass": true,
+      "note": "jd-ecffef36"
+    },
+    {
+      "group": "T4",
+      "id": "T4-verstamp",
+      "name": "资产版本标识由文件 sha256 派生（可核对固定版本）",
+      "expected": "true",
+      "actual": "JDA-7966c0-faf6c5a10c78",
+      "pass": true,
+      "note": "assets/data.js:7966c0f076be02a7 assets/kb.js:f7abcd1637ec9e34 assets/skill.js:49944f4162e71d9a assets/engine.js:0a443a657bcac228 assets/agent.js:6f6477a9c6bb404e assets/ui.js:bb0f070d9dbf3e09 index.html:5530027fc4cad8f0"
+    },
+    {
+      "group": "T4",
+      "id": "T4-whatif",
+      "name": "What-if 同参数两次模拟结果一致",
+      "expected": "true",
+      "actual": "积压曲线 675→654→633→612",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T4",
+      "id": "T4-monotonic",
+      "name": "增员 0/2/4/6/8 人，逐周积压单调不增（模型合理性）",
+      "expected": "true",
+      "actual": "符合单调性",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T5",
+      "id": "T5-degraded-ok",
+      "name": "缺人手在岗字段的区县：仍返回结构完整答案",
+      "expected": "ok",
+      "actual": "ok",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T5",
+      "id": "T5-degraded-flag",
+      "name": "缺少关键字段 → 结论标记降级",
+      "expected": "true",
+      "actual": "true",
+      "pass": true,
+      "note": "降级标记来自 installStaff 缺失"
+    },
+    {
+      "group": "T5",
+      "id": "T5-degraded-gap",
+      "name": "降级时给出证据缺口清单而非猜测",
+      "expected": "true",
+      "actual": "反证 1 条",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T5",
+      "id": "T5-state-CD",
+      "name": "城东区：归因状态与命中规则数一致（无异常不硬归因）",
+      "expected": "no_anomaly",
+      "actual": "no_anomaly",
+      "pass": true,
+      "note": "命中（不含口径）0 项"
+    },
+    {
+      "group": "T5",
+      "id": "T5-state-CX",
+      "name": "城西区：归因状态与命中规则数一致（无异常不硬归因）",
+      "expected": "unattributed",
+      "actual": "unattributed",
+      "pass": true,
+      "note": "命中（不含口径）1 项"
+    },
+    {
+      "group": "T5",
+      "id": "T5-state-XG",
+      "name": "新港区：归因状态与命中规则数一致（无异常不硬归因）",
+      "expected": "attributed",
+      "actual": "attributed",
+      "pass": true,
+      "note": "命中（不含口径）5 项"
+    },
+    {
+      "group": "T5",
+      "id": "T5-empty",
+      "name": "空问题不崩溃且不产生结论",
+      "expected": "true",
+      "actual": "off_topic",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "group": "T5",
+      "id": "T5-default-region",
+      "name": "未指定区县时落到风险最高区县并说明",
+      "expected": "true",
+      "actual": "ok / 新港区",
+      "pass": true,
+      "note": ""
+    }
+  ]
+}

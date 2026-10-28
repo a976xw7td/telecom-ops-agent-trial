@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>电信经营决策助手 · 周报诊断与 What-if</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#16233b; --panel2:#1d2d4a; --line:#2a3d5e;
+    --text:#e8eefb; --muted:#93a4c2; --accent:#38bdf8; --ok:#34d399;
+    --warn:#fbbf24; --bad:#f87171; --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1220,#111c30 40%,#0b1220);color:var(--text);
+    font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px 18px 48px}
+  header{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
+  h1{font-size:19px;margin:0;letter-spacing:.3px}
+  .sub{color:var(--muted);font-size:12px}
+  .badge{display:inline-block;padding:1px 8px;border-radius:999px;background:#1e3a5f;
+    color:#9ec9ff;font-size:11px;margin-left:6px;vertical-align:middle}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:1.15fr .85fr}
+  @media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .card h2{font-size:13px;margin:0 0 10px;color:#b9cbe8;font-weight:600;letter-spacing:.4px}
+  .kpi{font-size:24px;font-weight:700;letter-spacing:.5px}
+  .kpi small{font-size:12px;color:var(--muted);font-weight:400;margin-left:4px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .tab{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#15243c;
+    color:#b9cbe8;cursor:pointer;font-size:13px}
+  .tab.on{background:#123a56;border-color:var(--accent);color:#dff2ff}
+  .tab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:var(--ok)}
+  .tab .dot.w{background:var(--warn)} .tab .dot.b{background:var(--bad)}
+  ul.checks{list-style:none;margin:0;padding:0}
+  ul.checks li{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed #22324e;font-size:13px}
+  ul.checks li:last-child{border-bottom:0}
+  .tag{flex:none;font-size:11px;padding:1px 7px;border-radius:6px;margin-top:2px}
+  .tag.fired{background:#4a1d24;color:#ffb4b4} .tag.clear{background:#123a2c;color:#8ff0c4}
+  .muted{color:var(--muted)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  textarea,input[type=text]{width:100%;background:#0e1a2d;border:1px solid var(--line);color:var(--text);
+    border-radius:10px;padding:10px 12px;font:inherit;resize:vertical}
+  button{padding:9px 16px;border-radius:10px;border:1px solid var(--accent);background:#0e3f5c;
+    color:#dff2ff;cursor:pointer;font:inherit}
+  button:hover{background:#12506f}
+  button.ghost{background:transparent;border-color:var(--line);color:#b9cbe8}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .ans{white-space:pre-wrap;font-size:13.5px;background:#0e1a2d;border:1px solid var(--line);
+    border-radius:10px;padding:12px;margin-top:12px;max-height:430px;overflow:auto}
+  .ans b{color:#dff2ff}
+  .trace{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .step{font-size:11px;padding:3px 9px;border-radius:8px;border:1px solid var(--line);background:#132339;color:#a9bfdd}
+  .step.ok{border-color:#1f6b4f;color:#8ff0c4} .step.blocked{border-color:#7a2a33;color:#ffb4b4}
+  .step.skipped,.step.degraded{border-color:#6b5520;color:#ffe0a3}
+  .alert{border-radius:10px;padding:12px;font-size:13px;margin-top:12px}
+  .alert.bad{background:#3a1620;border:1px solid #7a2a33}
+  .alert.warn{background:#3a2f14;border:1px solid #6b5520}
+  .alert.ok{background:#123a2c;border:1px solid #1f6b4f}
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+  footer{margin-top:22px;color:#6f82a0;font-size:11.5px;border-top:1px solid var(--line);padding-top:12px}
+  .tag.ok,.tag.clear{background:#123a2c;color:#8ff0c4}
+  .tag.bad,.tag.fired{background:#4a1d24;color:#ffb4b4}
+  .tag.w{background:#3a2f14;color:#ffe0a3}
+  .txt-ok{color:var(--ok)} .txt-bad{color:var(--bad)}
+  .pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line)}
+  .pill.ok{background:#123a2c;border-color:#1f6b4f;color:#8ff0c4}
+  .pill.warn{background:#3a2f14;border-color:#6b5520;color:#ffe0a3}
+  .pill.bad{background:#3a1620;border-color:#7a2a33;color:#ffb4b4}
+  .mini{padding:10px 12px}
+  .mini .kpi{margin:2px 0}
+  table.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.tbl th{text-align:left;color:var(--muted);font-weight:500;font-size:11.5px;padding:5px 6px;border-bottom:1px solid var(--line)}
+  table.tbl td{padding:5px 6px;border-bottom:1px dashed #22324e}
+  table.tbl tr:last-child td{border-bottom:0}
+  .ans p{margin:0 0 9px} .ans ul{margin:0 0 9px;padding-left:18px}
+  .ans li{margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>电信经营决策助手 <span class="badge" id="ver">ver</span></h1>
+    <div class="sub" id="subline">周报诊断 · 证据可追溯 · 可独立打开（离线）</div>
+  </div>
+  <div class="sub mono" id="metaline"></div>
+</header>
+
+<div class="grid g3" id="kpis" style="margin-bottom:14px"></div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="grid g2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>积压与装维产能（近 4 周）</h2>
+    <div id="chart1"></div>
+    <div class="legend">
+      <span><i style="background:#f87171"></i>安装积压（单）</span>
+      <span><i style="background:#38bdf8"></i>日产能 = 在岗×6</span>
+      <span><i style="background:#fbbf24"></i>日均到达</span>
+    </div>
+  </div>
+  <div class="card">
+    <h2>质量与结构（近 4 周）</h2>
+    <div id="chart2"></div>
+    <div class="legend">
+      <span><i style="background:#f87171"></i>离网率 %</span>
+      <span><i style="background:#34d399"></i>融合渗透率 %</span>
+      <span><i style="background:#fbbf24"></i>投诉（件）</span>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:14px">
+  <h2>规则检查结果 <span class="muted" id="riskline"></span></h2>
+  <ul class="checks" id="checks"></ul>
+</div>
+
+<div class="card" style="margin-bottom:14px">
+  <h2>问一个问题（自然语言 → 结构化判断 + 证据 + 动作）</h2>
+  <div class="row" style="margin-top:0">
+    <input type="text" id="q" placeholder="例如：新港区为什么离网率上升，我该怎么办？" />
+    <button id="ask">分析</button>
+    <button class="ghost" id="export">导出运行记录</button>
+  </div>
+  <div class="row" id="samples"></div>
+  <div id="answer"></div>
+  <div class="trace" id="trace"></div>
+</div>
+
+<div class="card" style="margin-bottom:14px">
+  <h2>What-if：装维人员约束（确定性复算，非估算）</h2>
+  <div class="row">
+    <label class="muted">增员 <b id="addv">4</b> 人</label>
+    <input type="range" id="add" min="0" max="20" value="4" style="flex:1;min-width:180px" />
+    <label class="muted">观察窗 <select id="wk" style="background:#0e1a2d;color:#e8eefb;border:1px solid #2a3d5e;border-radius:8px;padding:6px"><option value="2">2 周</option><option value="4" selected>4 周</option><option value="6">6 周</option><option value="8">8 周</option></select></label>
+  </div>
+  <div id="whatif" style="margin-top:10px"></div>
+</div>
+
+<footer>
+  <div>数据周期 <span class="mono" id="fperiod"></span>｜离线运行，无网络请求，无随机数；相同输入结果完全一致。</div>
+  <div style="margin-top:6px">所有结论均可回溯到数据行与知识库文档编号（D1–D8）；超出数据范围的问题会返回「证据不足」而不是猜测。</div>
+</footer>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/skill.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/agent.js"></script>
+<script src="assets/ui.js"></script>
